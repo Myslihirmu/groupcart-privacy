@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Join a group on GroupCart</title>
+    <meta property="og:title" content="Join a group on GroupCart">
+    <meta property="og:description" content="You've been invited to share a shopping list on GroupCart.">
+    <meta property="og:type" content="website">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #1d1d1f;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 28px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        }
+        .cart {
+            font-size: 56px;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #6e6e73;
+            margin-bottom: 24px;
+            line-height: 1.5;
+            font-size: 16px;
+        }
+        .code {
+            font-family: 'SF Mono', Menlo, Consolas, monospace;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            padding: 18px 24px;
+            background: #f5f5f7;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 28px;
+            color: #1d1d1f;
+        }
+        .button {
+            display: inline-block;
+            background: #007aff;
+            color: white !important;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 17px;
+            margin: 4px;
+            min-width: 180px;
+        }
+        .button.secondary {
+            background: #e5e5ea;
+            color: #007aff !important;
+        }
+        .fallback {
+            display: none;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5ea;
+        }
+        .fallback p {
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .no-code {
+            color: #ff3b30;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="cart">üõí</div>
+        <h1>Join a group on GroupCart</h1>
+        <p>You've been invited to share a shopping list.</p>
+        <div class="code" id="code">‚Äî</div>
+        <div>
+            <a href="#" id="openApp" class="button">Open GroupCart</a>
+        </div>
+        <div class="fallback" id="fallback">
+            <p>Don't have GroupCart installed yet?</p>
+            <!-- TODO: Replace with the real App Store URL once GroupCart is published -->
+            <a href="https://apps.apple.com/search?term=GroupCart" class="button secondary">Download on the App Store</a>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const code = (params.get('code') || '').toUpperCase().trim();
+        const codeEl = document.getElementById('code');
+        const openButton = document.getElementById('openApp');
+        const fallback = document.getElementById('fallback');
+
+        if (code) {
+            codeEl.textContent = code;
+            const appLink = `groupcart://join/${code}`;
+            openButton.href = appLink;
+
+            // Try to open the app right away on mobile. If the app is installed,
+            // iOS hands control to it. If not, the page stays here and the
+            // fallback panel appears so the user can grab the app instead.
+            setTimeout(() => {
+                window.location.href = appLink;
+            }, 200);
+            setTimeout(() => {
+                fallback.style.display = 'block';
+            }, 1800);
+        } else {
+            codeEl.textContent = 'No code';
+            codeEl.classList.add('no-code');
+            openButton.style.display = 'none';
+            fallback.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
