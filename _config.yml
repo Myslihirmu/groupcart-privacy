@@ -1,0 +1,5 @@
+# Force Jekyll to include the .well-known directory in the built site.
+# This is required so iOS can fetch the apple-app-site-association file
+# at https://getgroupcart.com/.well-known/apple-app-site-association.
+include:
+  - .well-known
